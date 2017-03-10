@@ -2,3 +2,4 @@ rootProject.name = 'rulebook-all'
 
 include 'rulebook-core'
 include 'rulebook-spring'
+include 'rulebook-versioning'

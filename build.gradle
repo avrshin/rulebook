@@ -188,6 +188,49 @@ project('rulebook-spring') {
     }
 }
 
+project('rulebook-versioning') {
+
+    dependencies {
+        compile project(":rulebook-core")
+    }
+
+    modifyPom {
+        project {
+            name 'RuleBook Versioning'
+            description 'Versioning support for RuleBook'
+            url "${properties['project.url']}"
+            inceptionYear "${properties['project.inceptionYear']}"
+
+            scm {
+                url "${properties['project.scm.url']}"
+                connection "${properties['project.scm.connection']}"
+                developerConnection "${properties['project.scm.developerConnection']}"
+            }
+
+            issueManagement {
+                system "${properties['project.issueManagement.system']}"
+                url "${properties['project.issueManagementUrl']}"
+            }
+
+            licenses {
+                license {
+                    name "${properties['project.license.name']}"
+                    url "${properties['project.license.url']}"
+                    distribution "${properties['project.license.distribution']}"
+                }
+            }
+
+            developers {
+                developer {
+                    id 'Clayton7510'
+                    name 'Clayton Long'
+                    email 'Clayton7510@gmail.com'
+                }
+            }
+        }
+    }
+}
+
 task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
     dependsOn subprojects.test
     sourceDirectories = files(subprojects.sourceSets.main.allSource.srcDirs)
