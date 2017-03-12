@@ -69,7 +69,9 @@ subprojects {
     }
 
     nexus {
-        sign = true
+        sign = false
+        snapshotRepositoryUrl = 'http://localhost:8080/artifactory/libs-snapshot'
+        repositoryUrl = 'http://localhost:8080/artifactory/libs-release'
     }
 
     checkstyle {
@@ -102,6 +104,10 @@ project('rulebook-core') {
             description 'A simple and intuitive rules abstraction for Java'
             url "${properties['project.compatibility']}"
             inceptionYear "${properties['project.inceptionYear']}"
+
+            repositories {
+
+            }
 
             scm {
                 url "${properties['project.scm.url']}"
@@ -187,7 +193,7 @@ project('rulebook-spring') {
         }
     }
 }
-
+/*
 project('rulebook-versioning') {
 
     dependencies {
@@ -230,6 +236,7 @@ project('rulebook-versioning') {
         }
     }
 }
+*/
 
 task jacocoRootReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
     dependsOn subprojects.test
