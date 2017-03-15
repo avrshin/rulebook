@@ -1,5 +1,5 @@
-[RuleBook-Spring Maven Central]:http://search.maven.org/#artifactdetails|com.deliveredtechnologies|rulebook-spring|0.3.1|
-[RuleBook-Core Maven Central]:http://search.maven.org/#artifactdetails|com.deliveredtechnologies|rulebook-core|0.3.1|
+[RuleBook-Spring Maven Central]:http://search.maven.org/#artifactdetails|com.deliveredtechnologies|rulebook-spring|0.3.4|
+[RuleBook-Core Maven Central]:http://search.maven.org/#artifactdetails|com.deliveredtechnologies|rulebook-core|0.3.4|
 [Apache 2.0 License]:https://opensource.org/licenses/Apache-2.0
 
 # RuleBook <img src="https://github.com/Clayton7510/RuleBook/blob/master/LambdaBook.png" height="100" align="left"/>
@@ -7,41 +7,79 @@
 
 ---
 
-<sub>&nbsp;[How It Works](#how-does-rulebook-work) &raquo; [Using RuleBook](#using-rulebook) &raquo; [POJO Rules](#pojo-rules) &raquo; [RuleBook with Spring](#using-rulebook-with-spring) &raquo; [Contributing](#want-to-contribute)</sub>
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)][Apache 2.0 License] [![Maven Central](https://img.shields.io/badge/maven%20central-0.3.4-brightgreen.svg)][RuleBook-Core Maven Central] [![Build Status](https://travis-ci.org/Clayton7510/RuleBook.svg?branch=master&maxAge=600)](https://travis-ci.org/Clayton7510/RuleBook) [![Coverage Status](https://coveralls.io/repos/github/Clayton7510/RuleBook/badge.svg?branch=master)](https://coveralls.io/github/Clayton7510/RuleBook?branch=master)  [![Gitter](https://badges.gitter.im/RuleBook.svg)](https://gitter.im/RuleBook?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)][Apache 2.0 License] [![Maven Central](https://img.shields.io/badge/maven%20central-0.3.1-brightgreen.svg)][RuleBook-Core Maven Central] [![Build Status](https://travis-ci.org/Clayton7510/RuleBook.svg?branch=master&maxAge=600)](https://travis-ci.org/Clayton7510/RuleBook) [![Coverage Status](https://coveralls.io/repos/github/Clayton7510/RuleBook/badge.svg?branch=master)](https://coveralls.io/github/Clayton7510/RuleBook?branch=master)  [![Gitter](https://badges.gitter.im/RuleBook.svg)](https://gitter.im/RuleBook?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+## Why RuleBook?
+RuleBook rules are built in the way that Java developers think: Java code. And they are executed in the way that programmers expect: In order. RuleBook also allows you to specify rules using an easy to use Lambda enabled Domain Specific Language or using POJOs that you define!
 
+Tired of classes filled with if/then/else statements? Need a nice abstraction that allows rules to be easily specified in way that decouples them from each other? Want to write rules the same way that you write the rest of your code [in Java]? RuleBook just might be the rules abstraction you've been waiting for!
 
-**Current Maven Releases**
+#### Contents
 
-|Description | Group                   | Artifact |  Version      |Repository |
-|---         |---                      |---       |---            |---        |
-|Core RuleBook Functionality |com.deliveredtechnologies|rulebook-core  |0.3.1 |[![Maven Central](https://img.shields.io/badge/maven%20central-0.3.1-brightgreen.svg)][RuleBook-Core Maven Central]|
-|Spring Support for RuleBook |com.deliveredtechnologies|rulebook-spring  |0.3.1 |[![Maven Central](https://img.shields.io/badge/maven%20central-0.3.1-brightgreen.svg)][RuleBook-Spring Maven Central]|
+* [1 Getting RuleBook](#1-getting-rulebook)
+  * [1.1 Building RuleBook](#11-building-rulebook)
+  * [1.2 Maven Central Releases](#12-maven-central-releases)
+  * [1.3 Latest SNAPSHOT Releases](#13-latest-sonatype-snapshot-development-release)
+  * [1.4 Adding RuleBook to Your Maven Project](#14-adding-rulebook-to-your-maven-project)
+  * [1.5 Adding RuleBook to Your Gradle Project](#15-adding-rulebook-to-your-gradle-project)
+* [2 Using RuleBook](#2-using-rulebook)
+  * [2.1 Using the Java Domain Specific Language](#21-a-helloworld-example-using-the-java-domain-specific-language)
+  * [2.2 Using Facts](#22-the-above-example-using-facts)
+  * [2.3 A \[Slightly\] More Complex Scenario](#23-a-slightly-more-complex-scenario)
+* [3 POJO Rules](#3-pojo-rules)
+  * [3.1 A POJO Rules Example](#31-a-hello-world-example)
+  * [3.2 A \[Slightly\] More Complex POJO Rules Example](#32-the-megabank-example-with-pojo-rules)
+* [4 Using RuleBook with Spring](#4-using-rulebook-with-spring)
+  * [4.1 Creating a Spring Enabled POJO Rule](#41-creating-a-spring-enabled-pojo-rule)
+  * [4.2 Configuring a RuleBook in Spring](#42-configuring-a-rulebook-in-spring)
+  * [4.3 Using a Spring Enabled RuleBook](#43-using-a-spring-enabled-rulebook)
+* [5 How to Contribute](#5-how-to-contribute)
+  * [5.1 Developer Guidelines](#51-developer-guidelines)
+  
+## 1 Getting RuleBook
 
-**Current Maven _Development_ Releases** &raquo; For those who like to live dangerously...
+### 1.1 Building RuleBook
 
-| Group                   | Artifact |  Version      |Repository |
-|---                      |---       |---            |---        |
-|com.deliveredtechnologies|rulebook-core  |0.3.2-SNAPSHOT |[![Sonatype Nexus](https://img.shields.io/badge/sonatype-SNAPSHOT-green.svg)](https://oss.sonatype.org/content/repositories/snapshots/)|
-|com.deliveredtechnologies|rulebook-spring  |0.3.2-SNAPSHOT |[![Sonatype Nexus](https://img.shields.io/badge/sonatype-SNAPSHOT-green.svg)](https://oss.sonatype.org/content/repositories/snapshots/)|
+```bash
+git clone https://github.com/Clayton7510/RuleBook.git
+cd RuleBook
+./gradlew build
+```
 
-### Why Another Rules Abstraction?
-Rules engines like Drools are more than many projects need. The format of the rules is also very specialized. And how rules are evaulated is not entirely straightforward. Other rules engines have other specialized requirements that can be foreign to many Java developers. That's why RuleBook is a dead simple, 100% Java rules abstraction without the mountain of specialized knowledge required by other [simple?] rules abstractions. It also executes rules in the order in which they are specified (ALWAYS!). 
+### 1.2 Maven Central Releases
 
-RuleBook rules are built in the way that Java developers think: Java code. And they are executed in the way that programmers expect: In order. Tired of classes filled with if/then/else statements? Need a nice abstraction that allows rules to be easily specified in way that decouples them from each other? Want to write rules the same way that you write the rest of your code [in Java]? RuleBook just might be the rules abstraction you've been waiting for.
+* rulebook-core &nbsp;&nbsp;&nbsp;[![Maven Central](https://img.shields.io/badge/maven%20central-0.3.4-brightgreen.svg)][RuleBook-Core Maven Central]
+* rulebook-spring [![Maven Central](https://img.shields.io/badge/maven%20central-0.3.4-brightgreen.svg)][RuleBook-Spring Maven Central]
 
-### How Does RuleBook Work?
-RuleBook is a rules abstraction based on the Chain of Responsibility pattern. Each rule specified in a RuleBook is chained together in the order in which it is specified. As one rule completes, the next rule is evaluated. Any rule can break the chain by returning RuleState.BREAK from the 'then' Function in the rule.
+### 1.3 Latest Sonatype SNAPSHOT (Development) Release
 
-State in Rules is handled through Facts. A Fact is literally just data that is named and supplied to a Rule or RuleBook _(note: facts added to a RuleBook are applied to all rules in the RuleBook)_. Facts can be both read and written to. So, in that way, facts can be used to evaluate state at the completion of a RuleBook execution and they can also be used to pass data into a Rule or RuleBook.
+* rulebook-core &nbsp;&nbsp;&nbsp;[![Sonatype Nexus](https://img.shields.io/badge/SNAPSHOT-0.3.5-green.svg)](https://oss.sonatype.org/content/repositories/snapshots/)
+* rulebook-spring [![Sonatype Nexus](https://img.shields.io/badge/SNAPSHOT-0.3.5-green.svg)](https://oss.sonatype.org/content/repositories/snapshots/)
 
-A special type of Rule called a Decision accepts Facts of one type and can store a Result of a different type. This works nicely when there are several different inputs all of the same type and there is a need to distill those inputs down to a different return type. Similar to how RuleBooks chain rules together, DecisionBooks chain Decisions together. And since a Decision is really just a special type of rule, DecisionBooks can also chain Rules and Decisions togehter. An example below illustrates how Rules and Decisions can be used together to create a Result based on the input of several Facts.
+### 1.4 Adding RuleBook to Your Maven Project
 
-<sub>[[Top](#rulebook-)]</sub>
+_Add the code below to your pom.xml_
 
-### Using RuleBook
-**A HelloWorld Example**
+```xml
+<dependency>
+    <groupId>com.deliveredtechnologies</groupId>
+    <artifactId>rulebook-core</artifactId>
+    <version>0.3.4</version>
+</dependency>
+```
+
+### 1.5 Adding RuleBook to Your Gradle Project
+
+_Add the code below to your build.gradle_
+
+```groovy
+compile 'com.deliveredtechnologies:rulebook-core:0.3.4'
+```
+
+<sub>[Top](#contents)</sub>
+
+## 2 Using RuleBook
+### 2.1 A HelloWorld Example Using the Java Domain Specific Language
 ```java
 public class ExampleRuleBook extends RuleBook {
   @Override
@@ -68,7 +106,7 @@ public class ExampleMainClass {
   }
 }
 ```
-**A HelloWorld Example Using Facts**
+### 2.2 The Above Example Using Facts
 ```java
 public class ExampleRuleBook extends RuleBook<String> {
   @Override
@@ -97,7 +135,7 @@ public class ExampleMainClass {
   }
 }
 ```
-**A [Slightly] More Complex Scenario**
+### 2.3 A [Slightly] More Complex Scenario
 
 _MegaBank issues home loans. Each home loan can have up to 3 applicants. If any of the applicant's credit scores is less than 700 then all of the applicants' available cash on hand must be at least $50,000.00, otherwise the loan is denied._
 
@@ -178,15 +216,13 @@ public class ExampleSolution {
 ```
 In the above example, the default Result value was initialized to false. So, unless a Decision set the result to something else, the result of running the DecisionBook would be false. And unfortunately, for these applicants, they just didn't meet the requirements for a loan at MegaBank as determined by the rules.
 
-One interesting thing about the HomeLoanDecisionBook is that Rules and Decisions were mixed in together. Why? Well, in this case, the requirement that there be no more than 3 applicants can disqualify an application immediately without having to change the default return value. And since a Rule is really a Decision that doesn't update the return value, using a Rule to specify the 3 applicants or less requirement works well.
+<sub>[[Top](#contents)]</sub>
 
-<sub>[[Top](#rulebook-)]</sub>
-
-### _POJO Rules_
+## 3 POJO Rules
 
 As of RuleBook v0.2, POJO rules are supported. Simply define your rules as annotated POJOs in a package and then use _RuleBookRunner_ to scan the package for rules and create a RuleBook out of them. It's that simple!
 
-**A Hello World Example**
+### 3.1 A Hello World Example
 
 ```java
 package com.example.pojorules;
@@ -227,7 +263,7 @@ public static void main(String args[]) {
 }
 ```
 
-**The MegaBank Example With POJOs**
+### 3.2 The MegaBank Example With POJO Rules
 
 ```java
 @Rule(order = 1) //order specifies the order the rule should execute in; if not specified, any order may be used
@@ -303,22 +339,14 @@ public static void main(String[] args) {
 }
 ```
 
-_Some Important Things to Note About POJOs..._
-* The order property on the @Rule annotation groups the order that rules are executed in.
-* Only Lists are injected with multiple Facts based on the type of the Facts.
-* If the object type of a Fact is declared as a @Given, its state won't be changed outsite the instance of the POJO rule.
-* If a Fact is declared as a @Given, any state changes made in the POJO rule instance seen after the rule completes.
-* The when() and then() methods don't have to be declared when() and then(), they just have to be annotated.
-* The annotated @When method must have no arguments and it must return a boolean result.
-* The annotated @Then method must have no arguments and it must return a RuleState result.
+<sub>[[Top](#contents)]</sub>
 
-<sub>[[Top](#rulebook-)]</sub>
-
-###_Using RuleBook with Spring_
+## 4 Using RuleBook with Spring
 
 RuleBooks in Spring can be created using Spring configurations with RuleBookBean classes. RuleBookBean classes should be scoped as prototype and they can add either rules created through the RuleBook DSL or Spring enabled POJO rules. And creating a Spring enabled POJO rule couldn't be easier; just create a POJO rule, but instead of using @Rule, use @RuleBean.
 
-**Creating a Spring Enabled POJO Rule**
+### 4.1 Creating a Spring Enabled POJO Rule
+
 ```java
 @RuleBean
 public class HelloSpringRule {
@@ -341,7 +369,8 @@ public class HelloSpringRule {
 }
 ```
 
-**Configuring a RuleBook in Spring**
+### 4.2 Configuring a RuleBook in Spring
+
 ```java
 @Configuration
 public class SpringConfig {
@@ -364,7 +393,8 @@ public class SpringConfig {
 }
 ```
 
-**Using a Spring Enabled RuleBook**
+### 4.3 Using a Spring Enabled RuleBook
+
 ```java
   @Autowired
   private ApplicationContext context;
@@ -376,15 +406,13 @@ public class SpringConfig {
   }
 ```
 
-<hr/>
+<sub>[[Top](#contents)]</sub>
 
-<sub>[[Top](#rulebook-)]</sub>
-
-### _Want to Contribute?_
+## 5 How to Contribute
 
 Suggestions and code contributions are welcome! Please see the _Developer Guidelines_ below.
 
-**_Developer Guidelines_**
+### 5.1 Developer Guidelines
 
 Contributions must adhere to the following criteria:
 
@@ -397,6 +425,6 @@ Contributions must adhere to the following criteria:
 7. Pull requests must be for the _develop_ branch.
 8. The version number in gradle.properties should match the milestone of the issue its associated with appended with _-SNAPSHOT_ (ex. 0.2-SNAPSHOT)
 
-Anyone may submit an issue, which can be either an enhancement/feature request or a bug to be remediated. If a feature request or a bug is approved, completed and an associated pull request is submitted that adheres to the above criteria, then the pull request will be merged and the contributor will be added to the list of contributors in the following release.
+Anyone may submit an issue, which can be either an enhancement/feature request or a bug to be remediated. If a feature request or a bug is approved (most reasonable ones will be), completed and an associated pull request is submitted that adheres to the above criteria, then the pull request will be merged and the contributor will be added to the list of contributors in the following release.
 
-<sub>[[Top](#rulebook-)]</sub>
+<sub>[[Top](#contents)]</sub>
