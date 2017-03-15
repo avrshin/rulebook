@@ -22,4 +22,8 @@ public class RuleBookClassLoader extends URLClassLoader {
   public RuleBookClassLoader(URL[] urls) {
     super(urls, null);
   }
+
+  public RuleBookClassLoader(URL url) {
+    super(new URL[] {url}, null);
+  }
 }
